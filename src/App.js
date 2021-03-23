@@ -79,11 +79,11 @@ function App() {
 		const baseURL = "https://api.exchangeratesapi.io/latest?";
 		setAmount(!Boolean(amount) + Number(amount));
 		const date = new Date();
-		const today = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getYear();
+		const today = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
 		if (base === end) {
 			popAlert();
 			setConversionHistory((prevHistory) => {
-				return [{ id: uuidv4(), base: base, amount: amount, end: end, rate: 1, date: Date().toLocaleString() }, ...prevHistory];
+				return [{ id: uuidv4(), base: base, amount: amount, end: end, rate: 1, date: today }, ...prevHistory];
 			});
 		} else {
 			fetch(baseURL + "symbols=" + end + "&base=" + base)
