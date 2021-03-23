@@ -1,9 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import ConvertHistory from "./ConvertHistory";
 import { v4 as uuidv4 } from "uuid";
 import SelectCurrency from "./SelectCurrency";
 import {
 	Snackbar,
+	Container,
 	Typography,
 	Input,
 	makeStyles,
@@ -40,12 +41,13 @@ const useStyles = makeStyles({
 	},
 	inputs: {
 		textAlign: "center",
+		marginBottom: "20px",
+		"& input": { textAlign: "center" },
 	},
 });
 
 function App() {
 	const [ConversionHistory, setConversionHistory] = useState([]);
-	const convAmountRef = useRef();
 	const [base, setBase] = useState(default_base);
 	const [end, setEnd] = useState(default_end);
 	const [amount, setAmount] = useState(1);
@@ -78,7 +80,8 @@ function App() {
 	function handleConvert(e) {
 		const baseURL = "https://api.exchangeratesapi.io/latest?";
 		setAmount(!Boolean(amount) + Number(amount));
-
+		const date = new Date();
+		const today = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getYear();
 		if (base === end) {
 			popAlert();
 			setConversionHistory((prevHistory) => {
@@ -90,7 +93,7 @@ function App() {
 				.then((data) => {
 					popAlert();
 					setConversionHistory((prevHistory) => {
-						return [{ id: uuidv4(), base: base, amount: amount, end: end, rate: data.rates[end], date: Date().toLocaleString() }, ...prevHistory];
+						return [{ id: uuidv4(), base: base, amount: amount, end: end, rate: data.rates[end], date: today }, ...prevHistory];
 					});
 				})
 				.catch((error) => alert("A intervenit o eroare, va rugam reincercati!"));
@@ -99,14 +102,14 @@ function App() {
 
 	return (
 		<>
-			<Typography component="div" className={classes.container}>
+			{/* <Typography component="div" className={classes.container}> */}
+			<Container style={{ width: "100%" }}>
 				<h1 style={{ textAlign: "center" }}>Currency Convertor</h1>
 				<Typography component="div" className={classes.inputs}>
 					<SelectCurrency def={default_base} callback={getSelectedBase} />
 					<Input
 						style={{ minWidth: "300px", minHeight: "50px", fontSize: "1.3rem" }}
 						placeholder="Amount"
-						inputref={convAmountRef}
 						type="number"
 						defaultValue="1"
 						onChange={(e) => {
@@ -114,10 +117,10 @@ function App() {
 						}}
 					></Input>
 					<SelectCurrency def={default_end} callback={getSelectedEnd} />
-					<Button variant="contained" color="primary" size="small" onClick={handleConvert} disableElevation>
-						Convert
-					</Button>
 				</Typography>
+				<Button style={{ display: "block", margin: "0 auto" }} variant="contained" color="primary" size="medium" onClick={handleConvert} disableElevation>
+					Convert
+				</Button>
 				<h2 style={{ textAlign: "center" }}>Results</h2>
 				<Snackbar anchorOrigin={{ vertical: "top", horizontal: "left" }} open={alerta}>
 					<Alert variant="filled" severity="success">
@@ -141,7 +144,8 @@ function App() {
 						</TableBody>
 					</Table>
 				</TableContainer>
-			</Typography>
+			</Container>
+			{/* </Typography> */}
 		</>
 	);
 }
