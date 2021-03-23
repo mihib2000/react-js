@@ -32,9 +32,7 @@ const useStyles = makeStyles({
 			fontSize: "1rem",
 		},
 	},
-	tabel: {
-		width: "100%",
-	},
+	tabel: { minWidth: "600px" },
 	container: {
 		width: "80%",
 		margin: "0 auto",
@@ -127,7 +125,7 @@ function App() {
 						Datele au fost introduse cu succes !
 					</Alert>
 				</Snackbar>
-				<TableContainer component={Card} elevation={3}>
+				<TableContainer style={{ maxHeight: "500px" }} component={Card} elevation={3}>
 					<Table aria-label="simple table" className={classes.tabel}>
 						<StyledTableHead>
 							<TableRow className={classes.head}>
