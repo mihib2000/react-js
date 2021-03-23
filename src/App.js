@@ -31,6 +31,7 @@ const useStyles = makeStyles({
 			color: "black",
 			fontWeight: "bold",
 			fontSize: "1rem",
+			background: "transparent",
 		},
 	},
 	tabel: { minWidth: "600px" },
