@@ -126,7 +126,7 @@ function App() {
 						Datele au fost introduse cu succes !
 					</Alert>
 				</Snackbar>
-				<TableContainer style={{ maxHeight: "500px" }} component={Card} elevation={3}>
+				<TableContainer component={Card} elevation={3}>
 					<Table aria-label="simple table" className={classes.tabel}>
 						<StyledTableHead>
 							<TableRow className={classes.head}>
